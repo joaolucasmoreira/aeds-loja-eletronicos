@@ -1,8 +1,6 @@
 #ifndef CLIENTE_H
 #define CLIENTE_H
 
-#define MAX_CLIENTES 100
-
 typedef struct {
     char cpfCnpj[20];
     char nome[100];
@@ -11,11 +9,18 @@ typedef struct {
     char endereco[150];
 } Cliente;
 
-int inserirCliente(Cliente clientes[], int *totalClientes, Cliente novo);
-int buscarCliente(Cliente clientes[], int totalClientes, char cpfCnpj[]);
-void listarClientes(Cliente clientes[], int totalClientes);
-int removerCliente(Cliente clientes[], int *totalClientes, char cpfCnpj[]);
+typedef struct NoCliente {
+    Cliente dados;
+    struct NoCliente *prox;
+} NoCliente;
+
+typedef NoCliente* ListaClientes;
+
+void inicializarListaClientes(ListaClientes *lista);
+int inserirCliente(ListaClientes *lista, Cliente novo);
+NoCliente *buscarCliente(ListaClientes lista, const char cpfCnpj[]);
+void listarClientes(ListaClientes lista);
+int removerCliente(ListaClientes *lista, const char cpfCnpj[]);
+void liberarListaClientes(ListaClientes *lista);
 
 #endif
-
-
